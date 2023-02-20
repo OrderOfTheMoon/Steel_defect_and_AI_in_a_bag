@@ -51,6 +51,7 @@ class myCallback(tf.keras.callbacks.Callback):
         if(logs.get('accuracy') > 0.98 ): # Stop training the model at 98% traning accuracy
             print("\nReached 98% accuracy so cancelling training!")
             self.model.stop_training = True
+# Построение модели по слоям для будущего анализа изображений
 model = Sequential()
 model.add(Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu",
                  strides = 1, padding = "same", data_format = "channels_last"))
