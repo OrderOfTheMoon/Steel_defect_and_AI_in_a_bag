@@ -75,6 +75,7 @@ model.add(Dense(6, activation = "softmax"))
 optimizer = Adam(lr = 0.00002)
 model.compile(optimizer = optimizer, loss = "categorical_crossentropy", metrics = ["accuracy"])
 model.summary()
+# Функция необходимая для отслеживания поведения сети во время обучения
 callbacks = myCallback()
 history = model.fit(train_generator,
         batch_size = 64,
