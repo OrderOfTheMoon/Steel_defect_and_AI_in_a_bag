@@ -72,17 +72,7 @@ model.add(Dense(6, activation = "softmax"))
 optimizer = Adam(lr = 0.00002)
 model.compile(optimizer = optimizer, loss = "categorical_crossentropy", metrics = ["accuracy"])
 model.summary()
-#model.add(MaxPooling2D(pool_size = (2, 2)))
-#model.add(Dropout(0.1))
-#model.add(Flatten())
-#model.add(Dense(256, activation = "relu"))
-#model.add(Dropout(0.3))
-#model.add(Dense(128, activation = "relu"))
-#model.add(Dropout(0.3))
-#model.add(Dense(6, activation = "softmax"))
-#optimizer = Adam(lr = 0.00002)
-#model.compile(optimizer = optimizer, loss = "categorical_crossentropy", metrics = ["accuracy"])
-#model.summary()
+
 # Функция необходимая для отслеживания поведения сети во время обучения
 callbacks = myCallback()
 history = model.fit(train_generator,
