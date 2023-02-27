@@ -52,6 +52,7 @@ class myCallback(tf.keras.callbacks.Callback):
             print("\nReached 98% accuracy so cancelling training!")
             self.model.stop_training = True
 # Построение модели по слоям для будущего анализа изображений
+# Нужно выписать информацию из Keras
 model = Sequential()
 model.add(Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu",
                  strides = 1, padding = "same", data_format = "channels_last"))
