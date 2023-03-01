@@ -133,3 +133,5 @@ for i, idx in enumerate(np.random.choice(x_test.shape[0], size=16, replace=False
     ax.set_title("{} ({})".format(target_labels[pred_idx], target_labels[true_idx]),
                  color=("green" if pred_idx == true_idx else "red"))
 # Пока не знаю, что писать, напишу завтра
+# Пока не знаю, что писать, напишу завтра
+# Пока не знаю, что писать, напишу завтра
