@@ -1,30 +1,29 @@
 # Импорт необходимых зависимостей
-import warnings
-import numpy as np
-import pandas as pd
-import math
-import os
-import itertools
-from keras.utils import np_utils
-from sklearn.preprocessing import Normalizer, scale
-from sklearn.datasets import load_files
+import warnings # Модуль контроля ошибок и предупреждения пользователя
+import numpy as np # Работа с многомерными массивами
+import pandas as pd # Работа с данными 
+import math # Раширенные математичяеские операции
+import os # Работа с операционной системой, с файловой системой
+import itertools # Различные удобные итераторы
+from keras.utils import np_utils # Утилиты
+from sklearn.preprocessing import Normalizer, scale # Подготовка данных к работе
+from sklearn.datasets import load_files # Текстовый файл с путем папки
 import tensorflow as tf
 from tensorflow import keras
-from IPython.display import SVG
-from keras.utils.vis_utils import model_to_dot
-from tensorflow.keras.utils import plot_model
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
-from tensorflow.keras.optimizers import Adam,SGD,Adagrad,Adadelta,RMSprop
-from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import ReduceLROnPlateau, LearningRateScheduler
+from keras.utils.vis_utils import model_to_dot # Визуализация
+from tensorflow.keras.utils import plot_model # Визуализация
+from keras.models import Sequential, load_model # Построение модели
+from keras.layers import Dense, Dropout, Flatten # Построение модели
+from keras.layers import Conv2D, MaxPooling2D, BatchNormalization # Построение модели
+from tensorflow.keras.optimizers import Adam,SGD,Adagrad,Adadelta,RMSprop # Построение модели
+from keras.preprocessing.image import ImageDataGenerator # Генерация новых изображений с целью компенации малого количества исходных
+from keras.callbacks import ReduceLROnPlateau, LearningRateScheduler # На основе "терпения" снижает скорость обучения, при градиентном методе обучения
 from tensorflow.keras.utils import to_categorical
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import matplotlib.pylab as pylab
-import seaborn as sns
-import missingno as msno
+import matplotlib as mpl # Визуализация
+import matplotlib.pyplot as plt # Визуализация
+import matplotlib.pylab as pylab # Визуализация
+import seaborn as sns # Визуализация
+import missingno as msno # Подготовка данных к работе
 #Загрузка датасета
 Train = 'Ссылка на тренировочные данные'
 Val = 'Ссылка на данные для валидации'
@@ -48,8 +47,8 @@ train_generator = train_datagen.flow_from_directory(
         class_mode = 'categorical')
 class myCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
-        if(logs.get('accuracy') > 0.98 ): # Stop training the model at 98% traning accuracy
-            print("\nReached 98% accuracy so cancelling training!")
+        if(logs.get('accuracy') > 0.98 ): 
+            print("Stop")
             self.model.stop_training = True
 # Построение модели по слоям для будущего анализа изображений
 # Нужно выписать информацию из Keras
@@ -73,7 +72,7 @@ model.add(Dense(6, activation = "softmax"))
 optimizer = Adam(lr = 0.00002)
 model.compile(optimizer = optimizer, loss = "categorical_crossentropy", metrics = ["accuracy"])
 model.summary()
-# Функция необходимая для отслеживания поведения сети во время обучения
+# Создание объекта на основе класса myCallback
 callbacks = myCallback()
 history = model.fit(train_generator,
         batch_size = 64,
@@ -132,6 +131,3 @@ for i, idx in enumerate(np.random.choice(x_test.shape[0], size=16, replace=False
     true_idx = np.argmax(y_test[idx])
     ax.set_title("{} ({})".format(target_labels[pred_idx], target_labels[true_idx]),
                  color=("green" if pred_idx == true_idx else "red"))
-# Пока не знаю, что писать, напишу завтра
-# Пока не знаю, что писать, напишу завтра
-# Пока не знаю, что писать, напишу завтра
