@@ -1,4 +1,3 @@
-# Импорт необходимых зависимостей
 import warnings
 import numpy as np
 import pandas as pd
@@ -25,11 +24,9 @@ import matplotlib.pyplot as plt
 import matplotlib.pylab as pylab
 import seaborn as sns
 import missingno as msno
-#Загрузка датасета
 Train = 'Ссылка на тренировочные данные'
 Val = 'Ссылка на данные для валидации'
 Test = 'Ссылка на данные для тестирования'
-#Подготовка датасета
 train_datagen = ImageDataGenerator(
     rescale = 1. / 255, #
     rotation_range = 8, #
@@ -40,7 +37,6 @@ train_datagen = ImageDataGenerator(
     vertical_flip = True, #
     horizontal_flip = True) #
 test_datagen = ImageDataGenerator(rescale = 1. / 255)
-# Flow training images in batches of 10 using train_datagen generator
 train_generator = train_datagen.flow_from_directory(
         train_dir,
         target_size = (200, 200),
@@ -51,8 +47,7 @@ class myCallback(tf.keras.callbacks.Callback):
         if(logs.get('accuracy') > 0.98 ): # Stop training the model at 98% traning accuracy
             print("\nReached 98% accuracy so cancelling training!")
             self.model.stop_training = True
-# Построение модели по слоям для будущего анализа изображений
-# Нужно выписать информацию из Keras
+
 model = Sequential()
 model.add(Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu",
                  strides = 1, padding = "same", data_format = "channels_last"))
@@ -70,17 +65,17 @@ model.add(Dropout(0.3))
 model.add(Dense(128, activation = "relu"))
 model.add(Dropout(0.3))
 model.add(Dense(6, activation = "softmax"))
-optimizer = Adam(lr = 0.00002)
+optimizer = Adam(lr = 0.00001)
 model.compile(optimizer = optimizer, loss = "categorical_crossentropy", metrics = ["accuracy"])
 model.summary()
-# Функция необходимая для отслеживания поведения сети во время обучения
 callbacks = myCallback()
 history = model.fit(train_generator,
         batch_size = 64,
-        epochs = 40,
+        epochs = 20,
         validation_data = validation_generator,
         callbacks = [callbacks],
         verbose = 1, shuffle = True)
+
 plt.figure(figsize = (12, 6))
 accuracy = history.history["accuracy"]
 val_accuracy = history.history["val_accuracy"]
@@ -98,7 +93,6 @@ plt.title("Training and validation loss")
 plt.legend()
 plt.show()
 test_dir = ' '
-
 
 def load_dataset(path):
     data = load_files(path)
